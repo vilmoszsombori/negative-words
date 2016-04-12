@@ -13,6 +13,7 @@ public class Analyzer {
 
 	public static final String PROPERTIES_FILE = "negative-words.properties";
 	public static final String NEGATIVE_WORDS = "negativeWords";
+	public static final char HASH = '#';
 
 	private static Properties properties = null;
 
@@ -45,7 +46,7 @@ public class Analyzer {
 				StringBuffer replacement = new StringBuffer();
 				while (matcher.find()) {
 					matcher.appendReplacement(replacement,
-							matcher.group(1) + hashes(matcher.group(2).length()) + matcher.group(3));
+							matcher.group(1) + StringUtils.fill(matcher.group(2).length(), HASH) + matcher.group(3));
 				}
 				matcher.appendTail(replacement);
 				content = replacement.toString();
@@ -53,20 +54,16 @@ public class Analyzer {
 		return content;
 	}
 
-	protected String hashes(int length) {
-		if (length <= 0) {
-			return "";
-		} else {
-			char[] array = new char[length];
-			Arrays.fill(array, '#');
-			return new String(array);
-		}
-	}
-
 	public void setNegativeWords(String words) {
 		negativeWords.clear();
 		if (words != null && !words.isEmpty())
 			Arrays.stream(words.split("[\\W]")).map(String::toLowerCase).forEach(w -> negativeWords.add(w));
+	}
+	
+	public void setNegativeWords(Set<String> negativeWords) {
+        this.negativeWords.clear();
+        if (negativeWords != null && !negativeWords.isEmpty())
+            negativeWords.stream().map(String::toLowerCase).forEach(w -> this.negativeWords.add(w));
 	}
 
 	public Set<String> getNegativeWords() {

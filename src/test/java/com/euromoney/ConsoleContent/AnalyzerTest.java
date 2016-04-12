@@ -30,6 +30,7 @@ public class AnalyzerTest {
     public static Object[][] provideStory1Data() {
         return new Object[][] {
             {"The weather in Manchester in winter is bad. It rains all the time - it must be horrible for people visiting.", 2}, 
+            {"The weather in Manchester in winter is horrible. It rains all the time - it must be horrible for people visiting.", 2}, 
             {"The weather in Manchester in winter is bad. It rains all the time - it must be horrible for swine visiting.", 3}, 
             {"The weather in Manchester in winter is great. The sun shines all the time - it must be brilliant for people visiting.", 0},
             {"", 0},
